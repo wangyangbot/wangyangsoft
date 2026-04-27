@@ -6,47 +6,445 @@
 }
 
 body {
-    font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f6f6f6;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
 }
 
+/* 容器样式 */
 .container {
     max-width: 800px;
     width: 90%;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    box-sizing: border-box;
     margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
-/* 标题区域 */
-.title-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* 粒子画布 */
+.particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 头部样式 */
+.header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
     position: relative;
-    margin-bottom: 20px;
     z-index: 2;
 }
 
-.title {
-    font-weight: 500;
-    color: #000000;
-    font-size: 24px;
+.header-content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header-content h1 {
+    margin: 0;
 }
 
 .title-link {
-    font-size: 14px;
-    color: #bbb;
-    white-space: nowrap;
     position: absolute;
-    right: -100px;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.title-link:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* 内容区域 */
+.content {
+    padding: 30px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* 标题样式 */
+.content h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* 风琴容器 */
+.accordion-container {
+    margin-top: 30px;
+}
+
+/* 风琴项 */
+.accordion-item {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.accordion-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(90deg, #ff6b6b 0%, #ffa06b 16%, #ffd93d 33%, #6bcf7f 50%, #66a1ff 66%, #c561c5 83%, #ff6b6b 100%);
+    background-size: 200% 100%;
+    animation: gradientBreathing 4s ease-in-out infinite;
+    z-index: 1;
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+}
+
+/* 风琴头部 */
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.accordion-header:hover {
+    background-color: #e9ecef;
+}
+
+.accordion-header h3 {
+    font-size: 1.2em;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.accordion-header .tip {
+    font-size: 0.9em;
+    color: #666;
+    margin-left: 10px;
+}
+
+.accordion-header .toggle-btn {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.accordion-header .toggle-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    transform: translateY(-60%) rotate(45deg);
+}
+
+.accordion-header .toggle-btn.open {
+    transform: rotate(180deg);
+}
+
+/* 风琴内容 */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.accordion-content.open {
+    max-height: 2000px;
+}
+
+/* 文章样式 */
+.article {
+    padding: 30px;
+    line-height: 1.8;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 文章背景颜色 */
+.content-blue {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.content-green {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    color: white;
+}
+
+.content-red {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.content-orange {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+}
+
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 容器样式 */
+.container {
+    max-width: 800px;
+    width: 90%;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 粒子画布 */
+.particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 头部样式 */
+.header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* 内容区域 */
+.content {
+    padding: 30px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* 标题样式 */
+.content h2 {
+    color: #1e3c72;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* 风琴容器 */
+.accordion-container {
+    margin-top: 30px;
+}
+
+/* 风琴项 */
+.accordion-item {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+}
+
+/* 风琴头部 */
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.accordion-header:hover {
+    background-color: #e9ecef;
+}
+
+.accordion-header h3 {
+    font-size: 1.2em;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.accordion-header .tip {
+    font-size: 0.9em;
+    color: #666;
+    margin-left: 10px;
+}
+
+.accordion-header .toggle-btn {
+    font-size: 1.5em;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+.accordion-header .toggle-btn.open {
+    transform: rotate(180deg);
+}
+
+/* 风琴内容 */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.accordion-content.open {
+    max-height: 2000px;
+}
+
+/* 文章样式 */
+.article {
+    padding: 30px;
+    line-height: 1.8;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 文章背景颜色 - 淡马卡龙色系（更淡） */
+.content-blue {
+    background: linear-gradient(135deg, #e6f3ff 0%, #ccedff 100%);
+    color: #333;
+}
+
+.content-green {
+    background: linear-gradient(135deg, #e6f9f0 0%, #ccf3e0 100%);
+    color: #333;
+}
+
+.content-red {
+    background: linear-gradient(135deg, #ffe6ec 0%, #ffd9e2 100%);
+    color: #333;
+}
+
+.content-orange {
+    background: linear-gradient(135deg, #fff3e6 0%, #ffe6cc 100%);
+    color: #333;
+}
+
+.content-purple {
+    background: linear-gradient(135deg, #f0e6ff 0%, #e6ccff 100%);
+    color: #333;
+}
+
+.content-default {
+    background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+    color: #333;
+}
+
+/* 文章标题 */
+.article h3 {
+    margin: 20px 0 15px 0;
+    font-size: 1.4em;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 10px;
+}
+
+/* 文章段落 */
+.article p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* 文章列表 */
+.article ul {
+    margin: 15px 0;
+    padding-left: 20px;
+}
+
+.article li {
+    margin-bottom: 10px;
+    list-style-type: disc;
+}
+
+/* 按钮样式 */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #2980b9;
 }
 
 /* 二维码弹窗 */
@@ -56,10 +454,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 999;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .qr-mask {
@@ -68,70 +466,32 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .qr-content {
     position: relative;
-    z-index: 1000;
-    background: #fff;
-    border-radius: 16px;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    z-index: 1001;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
 .qr-img {
-    width: 240px;
-    border-radius: 8px;
+    width: 500px;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
 }
 
 .qr-tip {
-    font-size: 16px;
-    color: #888;
-    margin-top: 20px;
+    font-size: 1.1em;
+    color: #333;
 }
 
-.top_tip {
-    font-size: 18px;
-    font-weight: 400;
-    color: #888888;
-    margin-bottom: 14px;
-    position: relative;
-    z-index: 2;
-}
-
-.header-area {
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 30px;
-}
-
-.particle-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* 软件项目卡片 */
-.power {
-    margin-top: 30px;
-    border-radius: 5px;
-    background-color: white;
-    width: 100%;
-    overflow: visible;
-    position: relative;
-}
-
-/* 顶部渐变呼吸灯效果 */
+/* 呼吸灯效果 */
 .power::before {
     content: '';
     position: absolute;
@@ -140,222 +500,273 @@ body {
     right: 0;
     height: 8px;
     border-radius: 5px 5px 0 0;
-    background: linear-gradient(90deg, 
-        #ff6b6b 0%, 
-        #ffa06b 16%, 
-        #ffd93d 32%, 
-        #6bcf6b 48%, 
-        #6bcfff 64%, 
-        #6b6bff 80%, 
-        #ff6bff 100%);
+    background: linear-gradient(90deg, #ff6b6b 0%, #ffa06b 16%, #ffd93d 33%, #6bcf7f 50%, #66a1ff 66%, #c561c5 83%, #ff6b6b 100%);
     background-size: 200% 100%;
     animation: gradientBreathing 4s ease-in-out infinite;
 }
 
 @keyframes gradientBreathing {
-    0%, 100% {
+    0% {
         background-position: 0% 50%;
-        opacity: 0.7;
     }
     50% {
         background-position: 100% 50%;
-        opacity: 1;
     }
-}
-
-/* 展开时的呼吸灯效果 */
-.power.show::before {
-    animation: gradientBreathingActive 2s ease-in-out infinite;
-}
-
-@keyframes gradientBreathingActive {
-    0%, 100% {
+    100% {
         background-position: 0% 50%;
-        opacity: 1;
     }
-    50% {
-        background-position: 100% 50%;
-        opacity: 0.8;
-    }
-}
-
-.power_info {
-    display: flex;
-    padding: 24px 16px;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    width: 100%;
-    cursor: pointer;
-}
-
-/* 右侧箭头指示器 */
-.power_info_arrow {
-    width: 12px;
-    height: 12px;
-    border-right: 2px solid #ccc;
-    border-bottom: 2px solid #ccc;
-    flex-shrink: 0;
-    margin-left: 10px;
-    transition: transform 0.3s ease;
-}
-
-.power_info_arrow.arrow-down {
-    transform: rotate(45deg);
-}
-
-.power_info_arrow.arrow-up {
-    transform: rotate(225deg);
-}
-
-.power_info_text {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 0;
-    min-width: 0;
-}
-
-.power_info_text_title {
-    margin-bottom: 10px;
-    font-weight: 400;
-    font-size: 20px;
-    color: #000;
-    word-break: break-word;
-    line-height: 28px;
-    min-height: 28px;
-}
-
-.power_info_text_tag {
-    margin-left: 12px;
-    background-color: #fbe0e0;
-    color: #e54545;
-    padding: 0 7px;
-    font-size: 14px;
-    vertical-align: middle;
-    border-radius: 3px;
-    display: inline-block;
-}
-
-.power_info_text_tip {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 18px;
-    padding-right: 20px;
-    line-height: 1.4;
-}
-
-.power_item {
-    padding: 0 16px;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.power_item.show {
-    padding: 20px 16px;
-    max-height: 20000px;
-    opacity: 1;
-    border-radius: 0 0 12px 12px;
-}
-
-/* 马卡龙配色背景 */
-.macaron-bg-blue { background: linear-gradient(135deg, #f0f7fc 0%, #e8f4fd 50%, #e0f0fc 100%); }
-.macaron-bg-red { background: linear-gradient(135deg, #fef5f7 0%, #fce8ec 50%, #fae0e7 100%); }
-.macaron-bg-green { background: linear-gradient(135deg, #f3faf4 0%, #e8f5e9 50%, #dff0e3 100%); }
-.macaron-bg-orange { background: linear-gradient(135deg, #fffbf0 0%, #fff8e8 50%, #fff4dd 100%); }
-.macaron-bg-purple { background: linear-gradient(135deg, #faf5fd 0%, #f5eef8 50%, #efe6f4 100%); }
-.macaron-bg-default { background: linear-gradient(135deg, #fefefe 0%, #fafafa 50%, #f5f5f5 100%); }
-
-/* 富文本样式 */
-.article-rich {
-    display: block;
-}
-
-.article-rich .article {
-    font-size: 18px;
-    line-height: 1.9;
-    color: #4a5568;
-    letter-spacing: 1px;
-}
-
-.article-rich .article-img {
-    width: 100%;
-    border-radius: 12px;
-    margin: 20px 0;
-}
-
-.article-rich h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 20px 0 16px 0;
-    color: #2d3748;
-}
-
-.article-rich h3 {
-    font-size: 20px;
-    font-weight: 500;
-    margin: 24px 0 14px 0;
-}
-
-.article-rich p {
-    margin-bottom: 16px;
-    text-align: justify;
-}
-
-.article-rich ul {
-    padding-left: 28px;
-    margin: 12px 0 16px 0;
-}
-
-.article-rich li {
-    margin-bottom: 12px;
-    list-style-type: disc;
-    line-height: 1.7;
-}
-
-.article-rich strong {
-    font-weight: 600;
-    color: #2d3748;
-}
-
-.article-rich em {
-    font-style: italic;
-    color: #718096;
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-    .title {
-        font-size: 20px;
+    .container {
+        width: 100%;
+        box-shadow: none;
     }
-    
-    .title-link {
-        font-size: 12px;
-        right: -80px;
+
+    .header h1 {
+        font-size: 2em;
     }
-    
-    .top_tip {
-        font-size: 16px;
+
+    .content h2 {
+        font-size: 1.5em;
     }
-    
-    .power_info_text_title {
-        font-size: 18px;
+
+    .accordion-header {
+        padding: 15px;
     }
-    
-    .power_info_text_tip {
-        font-size: 16px;
+
+    .accordion-header h3 {
+        font-size: 1.1em;
     }
-    
-    .article-rich .article {
-        font-size: 16px;
+
+    .article {
+        padding: 20px;
     }
-    
+
+    .qr-content {
+        padding: 20px;
+    }
+
     .qr-img {
-        width: 200px;
+        width: 150px;
+        height: 150px;
     }
+}
+
+/* 动画效果 */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 文章标题 */
+.article h3 {
+    margin: 20px 0 15px 0;
+    font-size: 1.4em;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 10px;
+}
+
+/* 文章段落 */
+.article p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* 文章列表 */
+.article ul {
+    margin: 15px 0;
+    padding-left: 20px;
+}
+
+.article li {
+    margin-bottom: 10px;
+    list-style-type: disc;
+}
+
+/* 按钮样式 */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* 二维码弹窗 */
+.qr-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.qr-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.qr-content {
+    position: relative;
+    z-index: 1001;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.qr-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.qr-tip {
+    font-size: 1.1em;
+    color: #333;
+}
+
+/* 呼吸灯效果 */
+.power::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    border-radius: 5px 5px 0 0;
+    background: linear-gradient(90deg, #ff6b6b 0%, #ffa06b 16%, #ffd93d 33%, #6bcf7f 50%, #66a1ff 66%, #c561c5 83%, #ff6b6b 100%);
+    background-size: 200% 100%;
+    animation: gradientBreathing 4s ease-in-out infinite;
+}
+
+@keyframes gradientBreathing {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .header h1 {
+        font-size: 2em;
+    }
+
+    .content h2 {
+        font-size: 1.5em;
+    }
+
+    .accordion-header {
+        padding: 15px;
+    }
+
+    .accordion-header h3 {
+        font-size: 1.1em;
+    }
+
+    .article {
+        padding: 20px;
+    }
+
+    .qr-content {
+        padding: 20px;
+    }
+
+    .qr-img {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* 动画效果 */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

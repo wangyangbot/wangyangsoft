@@ -9,21 +9,20 @@
 </head>
 <body>
     <div class="container">
-        <div class="header-area">
+        <div class="header">
             <canvas id="particleCanvas" class="particle-canvas"></canvas>
-            <div class="title-row">
-                <div class="title">汪洋软件笔记</div>
+            <div class="header-content">
+                <h1>汪洋软件笔记</h1>
                 <div class="title-link" onclick="showQRModal()">了解更多</div>
             </div>
-            <div class="top_tip">了解 · 学习 · 交流</div>
+            <p>了解 · 学习 · 交流</p>
         </div>
         
         <!-- 二维码弹窗 -->
         <div class="qr-modal" id="qrModal" onclick="hideQRModal()">
             <div class="qr-mask"></div>
             <div class="qr-content" onclick="event.stopPropagation()">
-                <img class="qr-img" src="/images/wangyangweixin.jpg" alt="微信二维码" />
-                <div class="qr-tip">长按识别二维码添加微信</div>
+                <img class="qr-img" src="wangyangweixin.jpg" alt="微信二维码" style="width: 450px; height: auto; max-width: 100%;"/>
             </div>
         </div>
         
@@ -38,7 +37,7 @@
                 tip: "适合中小型企业，支持私有部署",
                 showItem: false,
                 item: [],
-                contentStyleType: "green",
+                contentStyleType: "purple",
                 content: `<div class="article">
   <p style="color:#333;text-indent:2em;">软件+硬件结合的WMS仓库管理解决方案，适用于小件仓库，如零配件、医疗、备品备件、辅料、精密电子件、小件服装日化品仓库。</p>
   <h3 style="color:#2e7d32;">📋 解决问题</h3>
@@ -189,6 +188,41 @@
 </div>`
             },
             {
+                title: "🛠️ 正诺服务软件",
+                tip: " 适合中小型企业，SaaS部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "red",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">正诺服务软件是正诺集团打造的同城上门服务全链路 SaaS 平台，覆盖预约、派单、履约、结算与营销，助力本地生活服务商家快速搭建线上上门业务闭环。</p>
+  <h3 style="color:#c62828;">📋 解决问题</h3>
+  <ul>
+    <li><strong>订单调度乱、派单效率低：</strong>人工派单慢、技师匹配不准、空跑率高，导致客户流失与成本浪费。</li>
+    <li><strong>技师管理难、服务过程不可控：</strong>人技师资质与工时难监管、服务无追溯、评价与售后难处理，影响服务质量与口碑。</li>
+    <li><strong>获客成本高、营收增长慢：</strong>人线上引流弱、会员体系缺失、营销工具少，难以实现拉新与复购的闭环。</li>
+  </ul>
+  <h3 style="color:#c62828;">💡 核心能力</h3>
+  <ul>
+    <li><strong>覆盖服务广：</strong>支持服务包括上门按摩、陪玩、家政家教、台球助教、产康护理等。</li>
+    <li><strong>多端智能预约：</strong>包括商家端、技师端和客户端，支持小程序 / 公众号 / H5 多端下单，用户可按时间、服务、技师偏好预约，地图定位选地址、价格透明。</li>
+    <li><strong>AI 智能派单调度：</strong>基于地理位置、空闲时段、技能匹配自动派单，支持抢单 / 改派 / 转单，实时导航与订单提醒。</li>
+    <li><strong>技师与服务管控：</strong>技师档案、资质审核、工时管理、服务全程录音录像，服务记录可追溯，保障合规与质量。</li>
+    <li><strong>营销与会员体系：</strong>优惠券、拼团、老带新、储值会员、积分商城，助力拉新、提升复购与客单价。</li>
+    <li><strong>数据看板与财务结算：</strong>人订单 / 用户 / 技师绩效 / 营收多维度数据可视化，自动分账、佣金结算、提现管理，对账清晰。</li>
+
+  </ul>
+  <h3 style="color:#c62828;">👥 适用企业</h3>
+  <p style="text-indent:2em;">
+      <ul>
+    <li><strong>同城生活服务商家：</strong>上门按摩 / 理疗、家政保洁、家电维修、美甲美睫、美容护肤等。</li>
+  <li><strong>本地服务连锁门店：</strong>足疗 SPA、养生会所、美容美体等，拓展 “到店 + 到家” 双模式经营。</li>
+  <li><strong>上门服务创业平台：</strong>初创 O2O 上门服务平台、共享技师联盟运营商、同城服务聚合平台。</li>
+  <li><strong>需要数字化转型的中小服务商：</strong>传统线下服务机构，想低成本快速搭建线上上门业务、提升运营效率。</li>
+  </ul>
+  </p>
+</div>`
+            },
+            {
                 title: "⚙️ OdooERP",
                 tip: "适合中小型企业，支持私有部署",
                 showItem: false,
@@ -273,7 +307,7 @@
                 tip: "大中小型企业都适合，支持私有部署",
                 showItem: false,
                 item: [],
-                contentStyleType: "green",
+                contentStyleType: "purple",
                 content: `<div class="article">
   <h2 style="color:#2e7d32;font-weight:bold;">🗺️ 云罗GEO</h2>
   <p style="color:#333;text-indent:2em;">云罗 GEO 是国内全栈自研的生成式引擎优化软件，专注提升企业在豆包、文心一言等主流 AI 大模型中的曝光、引用与转化，是 AI 搜索时代的 "新 SEO" 工具。</p>
@@ -442,47 +476,39 @@
 
             powerList.forEach((power, index) => {
                 const powerDiv = document.createElement('div');
-                powerDiv.className = 'power';
+                powerDiv.className = 'accordion-item';
                 powerDiv.id = `power-${index}`;
 
                 const powerInfo = document.createElement('div');
-                powerInfo.className = 'power_info';
+                powerInfo.className = 'accordion-header';
                 powerInfo.setAttribute('data-index', index);
                 powerInfo.onclick = function() { onClickPowerInfo(index); };
 
                 const powerInfoText = document.createElement('div');
                 powerInfoText.className = 'power_info_text';
 
-                const powerInfoTextTitle = document.createElement('div');
-                powerInfoTextTitle.className = 'power_info_text_title';
+                const powerInfoTextTitle = document.createElement('h3');
                 powerInfoTextTitle.textContent = power.title;
 
-                if (power.tag) {
-                    const powerInfoTextTag = document.createElement('div');
-                    powerInfoTextTag.className = 'power_info_text_tag';
-                    powerInfoTextTag.textContent = power.tag;
-                    powerInfoTextTitle.appendChild(powerInfoTextTag);
-                }
-
-                const powerInfoTextTip = document.createElement('div');
-                powerInfoTextTip.className = 'power_info_text_tip';
+                const powerInfoTextTip = document.createElement('span');
+                powerInfoTextTip.className = 'tip';
                 powerInfoTextTip.textContent = power.tip;
 
                 powerInfoText.appendChild(powerInfoTextTitle);
                 powerInfoText.appendChild(powerInfoTextTip);
 
                 const powerInfoArrow = document.createElement('div');
-                powerInfoArrow.className = `power_info_arrow ${power.showItem ? 'arrow-up' : 'arrow-down'}`;
+                powerInfoArrow.className = `toggle-btn ${power.showItem ? 'open' : ''}`;
 
                 powerInfo.appendChild(powerInfoText);
                 powerInfo.appendChild(powerInfoArrow);
 
                 const powerItem = document.createElement('div');
-                powerItem.className = `power_item ${power.showItem ? 'show' : ''} macaron-bg-${power.contentStyleType}`;
+                powerItem.className = `accordion-content ${power.showItem ? 'open' : ''}`;
                 powerItem.onclick = function() { onClickArticle(index); };
 
                 const articleRich = document.createElement('div');
-                articleRich.className = 'article-rich';
+                articleRich.className = `article content-${power.contentStyleType}`;
                 articleRich.innerHTML = power.content;
 
                 powerItem.appendChild(articleRich);
@@ -536,8 +562,8 @@
             if (!canvas) return;
             
             const ctx = canvas.getContext('2d');
-            const width = canvas.offsetWidth;
-            const height = canvas.offsetHeight;
+            const width = canvas.parentElement.offsetWidth;
+            const height = canvas.parentElement.offsetHeight;
             canvas.width = width;
             canvas.height = height;
             
@@ -577,7 +603,7 @@
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(100, 160, 220, ${alpha})`;
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
                             ctx.lineWidth = 1;
                             ctx.stroke();
                         }

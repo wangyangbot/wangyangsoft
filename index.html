@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>汪洋软件笔记</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-area">
+            <canvas id="particleCanvas" class="particle-canvas"></canvas>
+            <div class="title-row">
+                <div class="title">汪洋软件笔记</div>
+                <div class="title-link" onclick="showQRModal()">了解更多</div>
+            </div>
+            <div class="top_tip">了解 · 学习 · 交流</div>
+        </div>
+        
+        <!-- 二维码弹窗 -->
+        <div class="qr-modal" id="qrModal" onclick="hideQRModal()">
+            <div class="qr-mask"></div>
+            <div class="qr-content" onclick="event.stopPropagation()">
+                <img class="qr-img" src="/images/wangyangweixin.jpg" alt="微信二维码" />
+                <div class="qr-tip">长按识别二维码添加微信</div>
+            </div>
+        </div>
+        
+        <div id="powerListContainer"></div>
+    </div>
+    
+    <script>
+        // 软件数据
+        const powerList = [
+            {
+                title: "🏭 特伦斯仓库管理解决方案",
+                tip: "适合中小型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "green",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">软件+硬件结合的WMS仓库管理解决方案，适用于小件仓库，如零配件、医疗、备品备件、辅料、精密电子件、小件服装日化品仓库。</p>
+  <h3 style="color:#2e7d32;">📋 解决问题</h3>
+  <ul>
+    <li>SKU多、易混淆、人工记账错漏导致库存混乱、积压、缺货</li>
+    <li>小件堆放随意导致空间浪费，利用率低，找货慢</li>
+    <li>高频小件出入库、人工找货路径乱、错发漏发、效率低的问题</li>
+    <li>新人上手慢、找货难</li>
+  </ul>
+  <h3 style="color:#2e7d32;">💡 核心能力</h3>
+  <ul>
+    <li><strong>支持多端操作：</strong>支持PC和PDA甚至手机操作出入库，支持批次、序列号、效期追溯</li>
+    <li><strong>简单好用：</strong>模块精简、操作简单，新人1小时培训上手</li>
+    <li><strong>电子货位标签：</strong>支持水墨屏电子货位标签，通过7种颜色支持最多7个拣货员同时拣货</li>
+    <li><strong>自动分配货位：</strong>分配货位支持自动按尺寸 / 频率分储，高频近通道、低频堆高，提升空间利用率</li>
+    <li><strong>库存预警和报表：</strong>智能预警 + 实时报表，方便快速应对决策</li>
+    <li><strong>对接和扩展：</strong>可独立使用，也预留了扩展接口，支持嵌入已有系统比如某友某蝶ERP、电商后台中使用</li>
+  </ul>
+  <h3 style="color:#2e7d32;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中小型企业，适配库存 SKU 多、出入库频繁、需批次 / 序列号追溯的企业，可与 ERP / 电商平台深度集成，支持私有部署和嵌入式部署，支持定制需求。</p>
+</div>`
+            },
+            {
+                title: "🔨 特伦斯竞价拍卖系统",
+                tip: "适合中型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "orange",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">一款可以独立部署，也可以嵌入自有商城平台的竞价拍卖系统，让闲置资产不再"躺平"贬值</p>
+  <h3 style="color:#e65100;">📋 解决问题</h3>
+  <ul>
+    <li>闲置资产和商品的价值无法最大化</li>
+    <li>线下拍卖和线上拍卖难以同时进行</li>
+    <li>难以实现跨境的拍卖、物流和支付</li>
+    <li>竞价交易不公开不透明，易产生纠纷</li>
+  </ul>
+  <h3 style="color:#e65100;">💡 核心能力</h3>
+  <ul>
+    <li><strong>公正透明：</strong>支持同步拍+网络拍双模式，全程留痕，让拍卖过程透明公开</li>
+    <li><strong>保证金管理：</strong>保证金缴纳、结算、退款全覆盖</li>
+    <li><strong>多种支付形式：</strong>支持对应付、合并付、扣减合并付等多种支付，省心省力</li>
+    <li><strong>多种物流方式：</strong>支持自提，物流，跨境物流，让标的周转不再卡壳</li>
+    <li><strong>数据安全：</strong>隐私数据加密保护，买家卖家都安全</li>
+    <li><strong>扩展能力：</strong>具有丰富的功能和预留的接口，可独立运行，也可嵌入自有商城平台</li>
+  </ul>
+  <h3 style="color:#e65100;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中型企业，适配线上营销促销、处理尾货、专业拍卖、大宗原料、不良资产处理等场景，支持私有部署和嵌入式部署，支持定制需求。</p>
+</div>`
+            },
+            {
+                title: "📚 特伦斯智库系统",
+                tip: "适合中小型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "purple",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">特伦斯智库系统是企业级私域知识管理与 AI 辅助决策平台，用于沉淀内部文档、案例、制度与行业情报，支持智能检索、权限管控、协作编辑与数据化复盘，帮助企业沉淀知识资产，提升决策能力。</p>
+  <h3 style="color:#6a1b9a;">📋 解决问题</h3>
+  <ul>
+    <li>信息零散，跨部门壁垒严重</li>
+    <li>研究效率低，决策无依据，成果难复用</li>
+    <li>知识断层，经验无法传承</li>
+    <li>汇报与方案整理时间长，输出效率低</li>
+  </ul>
+  <h3 style="color:#6a1b9a;">💡 核心能力</h3>
+  <ul>
+    <li>支持子库管理，品牌行业知识全覆盖</li>
+    <li>智能OCR识别，纸质文档秒变电子数据</li>
+    <li>海量学术成果，一键精准检索与下载</li>
+    <li>专家智库画像，快速匹配需要的大咖</li>
+    <li>可视化数据大屏，分析预测顺手拈来/li>
+    <li>多格式支持，PDF/Word/CAJ全兼容</li>
+    <li>科研成果上传，自动标引与审核流</li>
+    <li>智能标签推荐，越用越懂阅读喜好</li>
+    <li>全维度权限管理，数据安全有保障</li>
+  </ul>
+  <h3 style="color:#6a1b9a;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中小型企业，支持私有部署，支持定制需求。</p>
+</div>`
+            },
+            {
+                title: "🔏 契约锁 智能签章&印控平台 ",
+                tip: " 适合大中型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "blue",
+                content: `<div class="article">
+
+
+  <p style="color:#333;text-indent:2em;">契约锁 智能签章&印控平台是将实体印章 + U-Key + 电子签章纳入统一管理的电子签署和印控平台解决方案，以合法电子签章 + AI 印控 + 全程存证，实现用印合规、降本增效、降低用印风险。</p>
+  <h3 style="color:#1565c0;">📋 解决问题</h3>
+  <ul>
+    <li>印章、U-Key容易丢失</li>
+    <li>用印等待时间长，异地用印不便，用印过程不透明</li>
+    <li>文件打印、快递、保管成本高，耗费人力，且错漏多</li>
+    <li>无法核实对方签署的真实性</li>
+    <li>文件易被补填、换页、篡改</li>
+    <li>分散在各地的印章失效了还在盖，存在法律风险</li>
+    <li>用印制度不完善，台账缺失</li>
+    <li>发生偷盖、补盖、错盖、越权盖及盖人情章</li>
+  </ul>
+  <h3 style="color:#1565c0;">🔥 核心能力</h3>
+  <ul>
+    <li><strong>统一印控管理：</strong>通过印控台管理实体章、U-Key Hub管理U-Key，实现实体和虚拟印章统一管理，防丢失</li>
+    <li><strong>远程签署全程留痕：</strong>用印&签署过程全周期留痕，支持存证出证</li>
+    <li><strong>支持用印制度：</strong>支持用印制度自动约束警示和停止用印，自动台账，符合管理要求，避免用印风险</li>
+    <li><strong>支持多端引用：</strong>支持PC、APP、小程序等多端应用</li>
+    <li><strong>支持多场景应用：</strong>覆盖人力资源、采购、销售、培训、医疗、租赁、工程等近百种业务场景</li>
+    <li><strong>多组织集团化：</strong>支持多组织、多业务/行政条线的集团化管理和权限管理</li>
+    <li><strong>权威多重认证：</strong>集成公安部eID、工商系统对接及权威CA机构颁发数字证书，确保签署双方身份真实可信，防止冒用、代签</li>
+    <li><strong>确保不可更改：</strong>采用SHA-256散列技术、区块链存证及时间戳服务，确保合同内容不可修改，签署后防抵赖</li>
+    <li><strong>降本增效：</strong>文件电子化存储，节省纸张、打印、保管及人力成本，并提升检索效率，支持图形化及穿透统计，快速了解用印情况</li>
+    <li><strong>法律效力：</strong>安全合规，符合电子签名法，具备完整法律效力</li>
+  </ul>
+  <h3 style="color:#1565c0;">👥 适用企业</h3>
+  <p style="text-indent:2em;">大中小型企业都适用，适合国央企、政府机关、上市公司、集团化制造 / 建筑 / 医药 / 地产企业及有统一印控管理要求的民企（多主体、多印章、异地签署频繁、重视合规与数据安全、需信创适配与私有化部署），支持私有部署。</p>
+</div>`
+            },
+            {
+                title: "📝 契约锁 智能合同",
+                tip: " 大中小型企业都适合，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "red",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">契约锁 智能合同是将AI技术融入合同管理全生命周期的系统，实现合同 智能写、便捷审、高效签、自动管，提升编写和签署效率，并阻断风险，让合同管理全程智能化、合规化、无纸化。</p>
+  <h3 style="color:#c62828;">📋 解决问题</h3>
+  <ul>
+    <li>合同模板散乱、起草编写慢、查找耗时长</li>
+    <li>版本多，协作困难，错漏多</li>
+    <li>人工整理、归档成本高、核对工作量大</li>
+    <li>执行节点多，易遗漏，统计难</li>
+    <li>页数多、条款多加重法务审核负担</li>
+  </ul>
+  <h3 style="color:#c62828;">💡 核心能力</h3>
+  <ul>
+    <li><strong>合同创建编写快：</strong>内置标准合同模板库，支持 AI 生成合同、参数自动填充、条款标准化，一键生成合规合同</li>
+    <li><strong>支持复杂审批流：</strong>支持自定义多级审批流程，支持会签 / 会审，条件审，移动端审，缩短审批周期</li>
+    <li><strong>支持版本与协作：</strong>支持协作、审阅、版本对比、多文件对比，全程留痕可追溯</li>
+    <li><strong>合同履约跟踪提醒：</strong>实时监控合同执行情况，降低风险</li>
+    <li><strong>适配电子签：</strong>无缝对接契约锁 智能签章&印控平台，实现电子签和自动台账</li>
+    <li><strong>多组织集团化：</strong>支持多组织、集团化、分权限管理，降低管理风险</li>
+    <li><strong>方便对接扩展：</strong>：提供开放接口平台，无缝对接现有系统</li>
+  </ul>
+  <h3 style="color:#c62828;">👥 适用企业</h3>
+  <p style="text-indent:2em;">大中小型企业均可使用，适合异地签署频繁、合同量大、法务合规要求高、需信创适配的企业，支持私有部署。</p>
+</div>`
+            },
+            {
+                title: "⚙️ OdooERP",
+                tip: "适合中小型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "default",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">Odoo是一款源自比利时的"一站式"ERP系统，为中小企业提供全面的业务管理解决方案。</p>
+  <h3 style="color:#333;">📋 解决问题</h3>
+  <ul>
+    <li>企业已有ERP、CRM、HRM、OA……各种系统太多，使用需要频繁切换</li>
+    <li>已有系统太重、太贵、难扩展，不贴合业务，定制开发成本高昂</li>
+    <li>数据孤岛和碎片化严重，难以开发大量接口，或已有各种定制功能和接口的运维成本高</li>
+  </ul>
+  <h3 style="color:#333;">💡 核心能力</h3>
+  <ul>
+    <li><strong>基本模块齐全:</strong>覆盖了财务、采购、销售、仓库、生产、人事、CRM、电商、服务、知识库、项目管理……等70+项业务，实现"一站式"管理</li>
+    <li><strong>计费简单:</strong>只按用户数计费，可不受限使用全部基本模块，随时增减模块，而不是按用户 + 模块计费，使用和运维成本比某友某蝶便宜50%以上，减轻企业负担</li>
+    <li><strong>国际化、集团化:</strong>支持多语言、多时区、多币种、多会计准则，多组织集团化管理，实现跨境国际化管理</li>
+    <li><strong>高可定制:</strong>支持Odoo Studio低代码高度定制，贴合业务</li>
+    <li><strong>社区支持:</strong>支持社区4w+第三方应用和插件</li>
+  </ul>
+  <h3 style="color:#333;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中小型企业（10——500人），以及有跨境、电商、CRM+ERP+HRM一站式需求的企业，支持私有部署，可根据企业需求进行模块选择和定制。</p>
+</div>`
+            },
+            {
+                title: "🧾 数电票接口",
+                tip: "适合中小型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "red",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">数电票接口解决方案让企业与税务系统对接，实现<strong>电子发票自动开具</strong>，查验、红冲、归档全流程自动化、合规化与实时同步。</p>
+  <h3 style="color:#c62828;">📋 解决问题</h3>
+  <ul>
+    <li>人工报税录入慢、易错、速度慢、效率低</li>
+    <li>业务和税务各自孤立，数据不一致，难对账</li>
+    <li>纸质发票打印和快递成本高、易丢失、易损坏、难追溯、难查询</li>
+  </ul>
+  <h3 style="color:#c62828;">💡 核心能力</h3>
+  <ul>
+    <li><strong>对接税务：</strong>支持通过ERP系统、Excel表格、TXT文本三种方式，对接税务系统，开具电子发票开具</li>
+    <li><strong>二维码开票：</strong>支持生成专属开票二维码，客户扫码填写抬头完成开票</li>
+    <li><strong>支持特定业务：</strong>支持海关关单（外销发票）、成品油、农产品、不动产销售租赁、建筑服务等多种特定业务发票</li>
+    <li><strong>发票多种处理：</strong>支持合并、拆分、智能处理税收分类编码、发票回写</li>
+    <li><strong>重复和填错提醒：</strong>支持重复开票提醒、客户匹配、税收编码档案匹配，避免重复开票和填错</li>
+    <li><strong>集中管理：</strong>集中管理电子发票，方便查询和归档</li>
+    <li><strong>无缝衔接：</strong>无缝对接某友某蝶某商城等数十个主流ERP和系统，并预留了开发接口，灵活集成和扩展</li>
+  </ul>
+  <h3 style="color:#c62828;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中小型企业，代理记账、待开票机构，需要批量开票的电商公司，对自动化开票有需求的企业等，支持私有部署，帮助企业实现发票管理的数字化和自动化。</p>
+</div>`
+            },
+            {
+                title: "☁️  天翼云",
+                tip: "便宜、稳定、快速的云平台",
+                showItem: false,
+                item: [],
+                contentStyleType: "blue",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">天翼云是中国电信提供的云计算服务平台，为企业提供<strong>安全、稳定、高效</strong>的云服务。</p>
+  <h3 style="color:#1565c0;">📋 解决问题</h3>
+  <ul>
+    <li>算力不足、成本高、调度难</li>
+    <li>云网割裂、网络慢、体验差</li>
+    <li>数据分散、安全弱、合规风险高</li>
+    <li>信创改造难、国产化适配成本高</li>
+  </ul>
+  <h3 style="color:#1565c0;">💡 核心能力</h3>
+  <ul>
+    <li><strong>自主可控：</strong>红色基因・国运担当・全栈信创，核心技术自主安全，政企事业单位必选</li>
+    <li><strong>价格优势：</strong>5M 以上带宽价格，比同类产品便宜50%以上，降本一步到位</li>
+    <li><strong>电信底座：</strong>云网融合・高速稳定・低延时，容器 / 存储 / AI / 边缘云，全域协同</li>
+    <li><strong>属地运维：</strong>省 — 云 — 市三级差异化运维、响应快，告别工单推诿、答非所问，问题高效解决</li>
+  </ul>
+  <h3 style="color:#1565c0;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合需要安全合规 / 云网一体 / 信创 / 国企 / 中大型政企等使用，具有高性价比和稳定性。</p>
+</div>`
+            },
+            {
+                title: "🗺️ 云罗GEO",
+                tip: "大中小型企业都适合，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "green",
+                content: `<div class="article">
+  <h2 style="color:#2e7d32;font-weight:bold;">🗺️ 云罗GEO</h2>
+  <p style="color:#333;text-indent:2em;">云罗 GEO 是国内全栈自研的生成式引擎优化软件，专注提升企业在豆包、文心一言等主流 AI 大模型中的曝光、引用与转化，是 AI 搜索时代的 "新 SEO" 工具。</p>
+  <h3 style="color:#2e7d32;">📋 解决问题</h3>
+  <ul>
+    <li>企业优质内容不被 AI 识别、引用率低，甚至信息错乱、误导用户</li>
+    <li>传统 SEO 失效，AI 成为新入口但缺乏优化手段，精准询盘少、获客贵</li>
+    <li>AI 平台多、规则变快，人工适配跟不上，优化效果不稳定、易失效</li>
+  </ul>
+  <h3 style="color:#2e7d32;">💡 核心能力</h3>
+  <ul>
+    <li><strong>全域 AI 平台适配：</strong>深度对接豆包、DeepSeek、文心一言等 25 + 主流 AI 平台，一次优化、全网可见</li>
+    <li><strong>精准语义匹配与内容结构化：</strong>深度分析大语言模型收录规则与用户搜索行为，基于语义网络构建内容框架，智能生成符合算法偏好的高质量文章，通过智能分发媒体账号，形成立体传播网络</li>
+    <li><strong>AI 可见度全链路诊断与优化：</strong>从关键词、知识图谱到答案嵌入、排名追踪，全流程自动化，嵌入成功率稳定 93%</li>
+    <li><strong>实时监测与算法快速适配：</strong>追踪品牌 / 竞品 AI 曝光，算法变动响应≤8 小时，远快于行业 48 小时均值</li>
+    <li><strong>合规安全与数据可追溯：</strong>内置违规词库、AI 查重≤2%，符合 EEAT² 框架，全流程留痕、可审计</li>
+  </ul>
+  <h3 style="color:#2e7d32;">👥 适用企业</h3>
+  <p style="text-indent:2em;">大中小型企业都适合，支持私有部署。</p>
+</div>`
+            },
+            {
+                title: "🗺️ 迅灵GEO",
+                tip: "适合中小型企业，SaaS服务为主",
+                showItem: false,
+                item: [],
+                contentStyleType: "green",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">讯灵AI-GEO+Agent是由南方网通自主研发的AI智能生态系统，基于AI大模型及独有GEO搜索优化、智能体训练技术，实现对Deepseek、豆包、元宝、千问、文心一言、纳米等PC+移动端12大AI平台的全域渗透。通过"GEO推广+AI智能体"的双驱创新形态，让AI帮企业推品牌、跑业务、做销售、做客服、做管理，为企业构建从数据沉淀到智能应用的AI数字资产。</p>
+  <h3 style="color:#2e7d32;">📋 解决问题</h3>
+  <ul>
+    <li>企业信息不被大模型识别、引用低，核心关键词难进 Top3，流量流</li>
+    <li>传统 SEO 失效、竞价贵，AI 咨询没人接、跟进慢，线索变订单难</li>
+    <li>灰色 GEO 有品牌风险，人工适配算法慢、易掉排名，优化没保障</li>
+  </ul>
+  <h3 style="color:#2e7d32;">💡 核心能力</h3>
+  <ul>
+    <li><strong>让AI帮你推品牌：</strong>通过画像设计主动教育AI触达潜在用户，结合用户需求多维度呈现品牌信息核心业务，当用户问AI时体现企业品牌竞争力</li>
+    <li><strong>让AI帮你跑业务：</strong>通过业务搜索词，业务问答词的多维度布局，通过AI主动获取潜在客户，降低营销成本，获取更高的曝光与信任</li>
+    <li><strong>让AI帮你做销售：</strong>通过Agent建立企业金牌销售的知识库，将其训练进入AI大模型的同时，通过公私域布局助力企业7*24小时进行业务接待</li>
+    <li><strong>让AI帮你做客服：</strong>通过Agent建立企业金牌客服的知识库，通过公私域或独立专业的业务线布局助力企业7*24小时进行售后服务</li>
+    <li><strong>低成本、高信任、长周期的新流量引擎：</strong>AI回答时植入品牌，用户信任度高、效果更持久、成本更低廉、获客更高效、全员AI数字员工智能运营，形成营销闭环</li>
+    <li><strong>独有的AI训练方式：</strong>AI独有的蒸馏词技术，精准提炼高转化搜索词，直击客户需求核心，实现精准营销
+  </ul>
+  <h3 style="color:#2e7d32;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中小微企业、区域连锁、本地服务商及成长型制造企业，以SaaS服务为主，满足预算有限、团队精简、想低成本抢占 AI 搜索流量的营销需求。</p>
+</div>`
+            },
+            {
+                title: "✈️ 梓如商旅平台",
+                tip: "适合大中型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "orange",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">梓如商旅平台为企业提供<strong>一站式差旅管理</strong>解决方案，优化差旅流程，控制差旅成本，实现差旅预订、审批、支付、报销全程无纸化、合规化、降本增效。</p>
+  <h3 style="color:#2e7d32;">📋 解决问题</h3>
+  <ul>
+    <li><strong>差旅成本高、管控难：</strong>机票酒店价格乱、协议价执行差、异常订单多，隐性成本高</li>
+    <li><strong>申请和报销流程繁琐、效率低：</strong>员工垫款、贴票、报销慢，审批链条长，财务对账稽核工作量大</li>
+    <li><strong>数据孤岛、合规风险：</strong>差旅与 OA / 财务 / HR 系统割裂，政策落地难、审计追溯难、数据安全无保障</li>
+  </ul>
+  <h3 style="color:#2e7d32;">💡 核心能力</h3>
+  <ul>
+    <li><strong>AI 智能预订与比价：</strong>机票 / 酒店 / 火车票一站式预订，AI 比价 + 协议价锁定，降低采购成本 15%-25%</li>
+    <li><strong>全流程无纸化费控：</strong>员工不垫款、不贴票、不报销，线上审批、自动对账、集中结算</li>
+    <li><strong>行程异常识别：</strong>地图定位异常、未使用客票稽核、价格偏离预警，实时拦截违规与浪费</li>
+    <li><strong>深度系统集成与定制：</strong>无缝对接 OA/ERP/ 财务 / 企业微信 / 钉钉，支持私有云 / 本地部署，数据安全可控</li>
+    <li><strong>智能分析决策：</strong>自然语言查询，多维度差旅报表可视化，助力成本优化与合规审计</li>
+  </ul>
+  <h3 style="color:#e65100;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合国央企、大型集团、上市公司、中大型制造 / 科技 / 建筑企业及政务单位（员工规模≥100 人、差旅频繁、重视合规与数据安全），支持私有部署，满足企业规模化差旅管理需求。</p>
+</div>`
+            },
+            {
+                title: "💰 亿流资金管理解决方案",
+                tip: "适合大中型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "blue",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">亿流资金管理系统为企业提供<strong>全面的资金管理</strong>解决方案，优化资金配置，提高资金使用效率。</p>
+  <h3 style="color:#1565c0;">📋 解决问题</h3>
+  <ul>
+    <li><strong>资金分散、可视性差：</strong>多银行账户零散、余额 / 交易不透明，集团无法实时掌握全局现金流</li>
+    <li><strong>手工操作多、效率低：</strong>线下对账、跨行调拨、外汇结算耗时易错，财务人力成本高</li>
+    <li><strong>风险难控、决策滞后：</strong>资金合规、汇率 / 流动性风险缺乏预警，数据滞后导致决策被动</li>
+  </ul>
+  <h3 style="color:#1565c0;">💡 核心能力</h3>
+  <ul>
+    <li><strong>跨行账户统一视图：</strong>一键聚合 200 + 银行账户，实时余额 / 交易查询，资金分布可视化</li>
+    <li><strong>智能结算与自动调拨：</strong>银企直连自动对账，集团资金池智能归集 / 下拨，提升资金利用率</li>
+    <li><strong>全场景风险合规管控：</strong>交易反欺诈、汇率 / 流动性预警、审批流电子化，符合国企 / 上市公司审计要求</li>
+    <li><strong>多币种外汇一体化管理：</strong>结售汇、跨境收付、汇率预测与对冲，覆盖进出口与海外业务</li>
+    <li><strong>AI 财资分析与决策支持：</strong>现金流预测、资金成本分析、融资智能匹配，对接 OA/ERP/ 财务系统</li>
+  </ul>
+  <h3 style="color:#1565c0;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中大型集团、上市公司、国央企、跨国制造 / 外贸企业及高成长连锁企业（多主体、多银行、多币种，需集中管控与合规提效），支持私有部署，满足企业复杂的资金管理需求。</p>
+</div>`
+            },
+            {
+                title: "👔 灵当CRM",
+                tip: "适合中小型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "red",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">灵当 CRM 是上海灵当自研、平台化可定制的全生命周期客户管理系统，以 "灵活配置" 为核心，打通营销 - 销售 - 服务 - 财务全链路，适配多行业数字化管理需求。</p>
+  <h3 style="color:#c62828;">📋 解决问题</h3>
+  <ul>
+    <li><strong>客户零散、跟进混乱：</strong>客户信息分散在微信 / Excel，跟进无记录、易流失，客户 360° 视图缺失</li>
+    <li><strong>销售过程不可控、赢单低：</strong>线索分配乱、商机跟进无标准、报价 / 合同无审批，业绩靠个人、难复制</li>
+    <li><strong>系统割裂、数据不通：</strong>CRM 与 ERP / 财务 / OA 分离，数据孤岛严重，无法一体化管理与决策</li>
+  </ul>
+  <h3 style="color:#c62828;">💡 核心能力</h3>
+  <ul>
+    <li><strong>无代码自定义平台：</strong>字段 / 表单 / 流程 / 报表全配置，无需开发，快速适配行业个性化需求</li>
+    <li><strong>L2C 全流程销售自动化：</strong>线索 - 客户 - 商机 - 合同 - 回款全链路管理，自动提醒、阶段可视化、提升赢单率。</li>
+    <li><strong>客户 360° 视图与智能服务：</strong>统一客户档案、跟进记录、工单管理，支持企微 / 微信 / 小程序多渠道服务接入。</li>
+    <li><strong>深度集成与多端协同：</strong>无缝对接金蝶 / 用友 / 钉钉 / 企业微信，支持 Web / 移动端 / 小程序，移动办公全覆盖</li>
+    <li><strong>数据洞察与绩效管控：</strong>多维度报表、销售目标拆解、提成自动核算，数据驱动决策与团队管理</li>
+  </ul>
+  <h3 style="color:#c62828;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适合中小微企业、成长型制造 / IT 服务商、教育培训 / 咨询机构、项目型公司及需要私有部署的中大型企业（销售驱动、重视客户运营、需低成本快速上线)，支持私有部署，帮助企业建立和维护良好的客户关系。</p>
+</div>`
+            },
+            {
+                title: "🛡️ 博盾F8涉税风险防控系统",
+                tip: "适合大中型企业，支持私有部署",
+                showItem: false,
+                item: [],
+                contentStyleType: "purple",
+                content: `<div class="article">
+  <p style="color:#333;text-indent:2em;">博盾 F8 是江苏税软旗下、AI 驱动的金税四期对标级涉税风险防控系统，以税务稽查视角做全税种自查、预警与应对，帮企业合规降险、规避稽查损失。</p>
+  <h3 style="color:#6a1b9a;">📋 解决问题</h3>
+  <ul>
+    <li><strong>风险看不见、查不出：</strong>业财税数据割裂，发票 / 申报 / 账务异常难发现，稽查来了才暴露</li>
+    <li><strong>人工合规成本高、效率低：</strong>全税种自查、政策匹配、证据留存靠手工，耗时易错、漏判多</li>
+    <li><strong>稽查应对被动、损失大：</strong>无标准化自查与应对流程，补税、滞纳金、罚款高，影响信用</li>
+  </ul>
+  <h3 style="color:#6a1b9a;">💡 核心能力</h3>
+  <ul>
+    <li><strong>金税四期同源风险引擎：</strong>同步税务局风控指标，全税种 / 全流程扫描，精准识别高风险点</li>
+    <li><strong>业财税数据一体化采集：</strong>自动聚合财务、发票、申报、合同数据，清洗比对、消除数据孤岛</li>
+    <li><strong>AI 分级预警与智能归因：</strong>风险分级评分、一键生成报告，定位根源并给出合规调整建议</li>
+    <li><strong>稽查级自查与应对闭环：</strong>内置 39 类行为、114 个税种应对指引，自查 — 整改 — 存档全流程标准化</li>
+    <li><strong>DeepSeek 大模型政策咨询：</strong>实时匹配最新税法，智能答疑、筹划建议，降低政策理解偏差风险</li>
+  </ul>
+  <h3 style="color:#6a1b9a;">👥 适用企业</h3>
+  <p style="text-indent:2em;">适用中大型民企、国央企、上市公司、高风险行业（医药 / 建筑 / 外贸 / 电商）及财税服务机构（全税种合规、多主体账务、常遇稽查或需上市 / 并购尽调），支持私有部署，帮助企业有效防控税务风险，确保税务合规。</p>
+</div>`
+            }
+        ];
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPowerList();
+            initParticles();
+            hideQRModal(); // 初始隐藏二维码弹窗
+        });
+
+        // 渲染软件列表
+        function renderPowerList() {
+            const container = document.getElementById('powerListContainer');
+            container.innerHTML = '';
+
+            powerList.forEach((power, index) => {
+                const powerDiv = document.createElement('div');
+                powerDiv.className = 'power';
+                powerDiv.id = `power-${index}`;
+
+                const powerInfo = document.createElement('div');
+                powerInfo.className = 'power_info';
+                powerInfo.setAttribute('data-index', index);
+                powerInfo.onclick = function() { onClickPowerInfo(index); };
+
+                const powerInfoText = document.createElement('div');
+                powerInfoText.className = 'power_info_text';
+
+                const powerInfoTextTitle = document.createElement('div');
+                powerInfoTextTitle.className = 'power_info_text_title';
+                powerInfoTextTitle.textContent = power.title;
+
+                if (power.tag) {
+                    const powerInfoTextTag = document.createElement('div');
+                    powerInfoTextTag.className = 'power_info_text_tag';
+                    powerInfoTextTag.textContent = power.tag;
+                    powerInfoTextTitle.appendChild(powerInfoTextTag);
+                }
+
+                const powerInfoTextTip = document.createElement('div');
+                powerInfoTextTip.className = 'power_info_text_tip';
+                powerInfoTextTip.textContent = power.tip;
+
+                powerInfoText.appendChild(powerInfoTextTitle);
+                powerInfoText.appendChild(powerInfoTextTip);
+
+                const powerInfoArrow = document.createElement('div');
+                powerInfoArrow.className = `power_info_arrow ${power.showItem ? 'arrow-up' : 'arrow-down'}`;
+
+                powerInfo.appendChild(powerInfoText);
+                powerInfo.appendChild(powerInfoArrow);
+
+                const powerItem = document.createElement('div');
+                powerItem.className = `power_item ${power.showItem ? 'show' : ''} macaron-bg-${power.contentStyleType}`;
+                powerItem.onclick = function() { onClickArticle(index); };
+
+                const articleRich = document.createElement('div');
+                articleRich.className = 'article-rich';
+                articleRich.innerHTML = power.content;
+
+                powerItem.appendChild(articleRich);
+                powerDiv.appendChild(powerInfo);
+                powerDiv.appendChild(powerItem);
+                container.appendChild(powerDiv);
+            });
+        }
+
+        // 点击软件信息展开/收起
+        function onClickPowerInfo(index) {
+            // 互斥展开：先把所有项收起，再展开当前项
+            powerList.forEach((item, i) => {
+                if (item.content) {
+                    if (i === index) {
+                        item.showItem = !item.showItem;
+                    } else {
+                        item.showItem = false;
+                    }
+                }
+            });
+            renderPowerList();
+        }
+
+        // 点击已展开的文章，收起并滚动到风琴项顶部
+        function onClickArticle(index) {
+            powerList[index].showItem = false;
+            renderPowerList();
+            // 收起动画完成后，滚动回风琴项位置（置顶）
+            setTimeout(() => {
+                const element = document.getElementById(`power-${index}`);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 350);
+        }
+
+        // 显示二维码弹窗
+        function showQRModal() {
+            document.getElementById('qrModal').style.display = 'flex';
+        }
+
+        // 隐藏二维码弹窗
+        function hideQRModal() {
+            document.getElementById('qrModal').style.display = 'none';
+        }
+
+        // 初始化粒子动画
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.offsetWidth;
+            const height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+            
+            const PARTICLE_COUNT = 8;
+            const MAX_DIST = 120;
+            const particles = [];
+            
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    radius: Math.random() * 2 + 2,
+                });
+            }
+            
+            const draw = () => {
+                ctx.clearRect(0, 0, width, height);
+                
+                // 更新粒子位置
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > width) p.vx = -p.vx;
+                    if (p.y < 0 || p.y > height) p.vy = -p.vy;
+                });
+                
+                // 绘制连线
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < MAX_DIST) {
+                            const alpha = (1 - dist / MAX_DIST) * 0.35;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(100, 160, 220, ${alpha})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                // 绘制粒子
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(100, 160, 220, 0.6)';
+                    ctx.fill();
+                });
+                
+                requestAnimationFrame(draw);
+            };
+            
+            draw();
+        }
+    </script>
+</body>
+</html>

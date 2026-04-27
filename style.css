@@ -1,0 +1,361 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f6f6f6;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.container {
+    max-width: 800px;
+    width: 90%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+/* 标题区域 */
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.title {
+    font-weight: 500;
+    color: #000000;
+    font-size: 24px;
+}
+
+.title-link {
+    font-size: 14px;
+    color: #bbb;
+    white-space: nowrap;
+    position: absolute;
+    right: -100px;
+    cursor: pointer;
+}
+
+/* 二维码弹窗 */
+.qr-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.qr-content {
+    position: relative;
+    z-index: 1000;
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-img {
+    width: 240px;
+    border-radius: 8px;
+}
+
+.qr-tip {
+    font-size: 16px;
+    color: #888;
+    margin-top: 20px;
+}
+
+.top_tip {
+    font-size: 18px;
+    font-weight: 400;
+    color: #888888;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+}
+
+.header-area {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+}
+
+.particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 软件项目卡片 */
+.power {
+    margin-top: 30px;
+    border-radius: 5px;
+    background-color: white;
+    width: 100%;
+    overflow: visible;
+    position: relative;
+}
+
+/* 顶部渐变呼吸灯效果 */
+.power::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    border-radius: 5px 5px 0 0;
+    background: linear-gradient(90deg, 
+        #ff6b6b 0%, 
+        #ffa06b 16%, 
+        #ffd93d 32%, 
+        #6bcf6b 48%, 
+        #6bcfff 64%, 
+        #6b6bff 80%, 
+        #ff6bff 100%);
+    background-size: 200% 100%;
+    animation: gradientBreathing 4s ease-in-out infinite;
+}
+
+@keyframes gradientBreathing {
+    0%, 100% {
+        background-position: 0% 50%;
+        opacity: 0.7;
+    }
+    50% {
+        background-position: 100% 50%;
+        opacity: 1;
+    }
+}
+
+/* 展开时的呼吸灯效果 */
+.power.show::before {
+    animation: gradientBreathingActive 2s ease-in-out infinite;
+}
+
+@keyframes gradientBreathingActive {
+    0%, 100% {
+        background-position: 0% 50%;
+        opacity: 1;
+    }
+    50% {
+        background-position: 100% 50%;
+        opacity: 0.8;
+    }
+}
+
+.power_info {
+    display: flex;
+    padding: 24px 16px;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* 右侧箭头指示器 */
+.power_info_arrow {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    flex-shrink: 0;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.power_info_arrow.arrow-down {
+    transform: rotate(45deg);
+}
+
+.power_info_arrow.arrow-up {
+    transform: rotate(225deg);
+}
+
+.power_info_text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 0;
+    min-width: 0;
+}
+
+.power_info_text_title {
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 20px;
+    color: #000;
+    word-break: break-word;
+    line-height: 28px;
+    min-height: 28px;
+}
+
+.power_info_text_tag {
+    margin-left: 12px;
+    background-color: #fbe0e0;
+    color: #e54545;
+    padding: 0 7px;
+    font-size: 14px;
+    vertical-align: middle;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.power_info_text_tip {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 18px;
+    padding-right: 20px;
+    line-height: 1.4;
+}
+
+.power_item {
+    padding: 0 16px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.power_item.show {
+    padding: 20px 16px;
+    max-height: 20000px;
+    opacity: 1;
+    border-radius: 0 0 12px 12px;
+}
+
+/* 马卡龙配色背景 */
+.macaron-bg-blue { background: linear-gradient(135deg, #f0f7fc 0%, #e8f4fd 50%, #e0f0fc 100%); }
+.macaron-bg-red { background: linear-gradient(135deg, #fef5f7 0%, #fce8ec 50%, #fae0e7 100%); }
+.macaron-bg-green { background: linear-gradient(135deg, #f3faf4 0%, #e8f5e9 50%, #dff0e3 100%); }
+.macaron-bg-orange { background: linear-gradient(135deg, #fffbf0 0%, #fff8e8 50%, #fff4dd 100%); }
+.macaron-bg-purple { background: linear-gradient(135deg, #faf5fd 0%, #f5eef8 50%, #efe6f4 100%); }
+.macaron-bg-default { background: linear-gradient(135deg, #fefefe 0%, #fafafa 50%, #f5f5f5 100%); }
+
+/* 富文本样式 */
+.article-rich {
+    display: block;
+}
+
+.article-rich .article {
+    font-size: 18px;
+    line-height: 1.9;
+    color: #4a5568;
+    letter-spacing: 1px;
+}
+
+.article-rich .article-img {
+    width: 100%;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.article-rich h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px 0 16px 0;
+    color: #2d3748;
+}
+
+.article-rich h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 24px 0 14px 0;
+}
+
+.article-rich p {
+    margin-bottom: 16px;
+    text-align: justify;
+}
+
+.article-rich ul {
+    padding-left: 28px;
+    margin: 12px 0 16px 0;
+}
+
+.article-rich li {
+    margin-bottom: 12px;
+    list-style-type: disc;
+    line-height: 1.7;
+}
+
+.article-rich strong {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.article-rich em {
+    font-style: italic;
+    color: #718096;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .title {
+        font-size: 20px;
+    }
+    
+    .title-link {
+        font-size: 12px;
+        right: -80px;
+    }
+    
+    .top_tip {
+        font-size: 16px;
+    }
+    
+    .power_info_text_title {
+        font-size: 18px;
+    }
+    
+    .power_info_text_tip {
+        font-size: 16px;
+    }
+    
+    .article-rich .article {
+        font-size: 16px;
+    }
+    
+    .qr-img {
+        width: 200px;
+    }
+}

@@ -14,8 +14,8 @@ body {
 
 /* 容器样式 */
 .container {
-    max-width: 800px;
-    width: 90%;
+    max-width: 768px;
+    width: 95%;
     min-height: 100vh;
     margin: 0 auto;
     background-color: white;
@@ -240,8 +240,8 @@ body {
 
 /* 容器样式 */
 .container {
-    max-width: 800px;
-    width: 90%;
+    max-width: 768px;
+    width: 95%;
     min-height: 100vh;
     margin: 0 auto;
     background-color: white;
@@ -524,33 +524,51 @@ body {
         box-shadow: none;
     }
 
+    .header {
+        padding: 30px 15px;
+    }
+
     .header h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+    }
+
+    .content {
+        padding: 20px 15px;
     }
 
     .content h2 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
 
     .accordion-header {
-        padding: 15px;
+        padding: 12px 15px;
     }
 
     .accordion-header h3 {
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .article {
-        padding: 20px;
+        padding: 15px;
+    }
+
+    .article h3 {
+        font-size: 1.2em;
     }
 
     .qr-content {
-        padding: 20px;
+        padding: 15px;
     }
 
     .qr-img {
-        width: 150px;
-        height: 150px;
+        width: 250px;
+        height: auto;
+    }
+
+    .title-link {
+        right: -100px;
+        font-size: 0.8em;
+        padding: 6px 12px;
     }
 }
 
@@ -707,33 +725,51 @@ body {
         box-shadow: none;
     }
 
+    .header {
+        padding: 30px 15px;
+    }
+
     .header h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+    }
+
+    .content {
+        padding: 20px 15px;
     }
 
     .content h2 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
 
     .accordion-header {
-        padding: 15px;
+        padding: 12px 15px;
     }
 
     .accordion-header h3 {
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .article {
-        padding: 20px;
+        padding: 15px;
+    }
+
+    .article h3 {
+        font-size: 1.2em;
     }
 
     .qr-content {
-        padding: 20px;
+        padding: 15px;
     }
 
     .qr-img {
-        width: 150px;
-        height: 150px;
+        width: 250px;
+        height: auto;
+    }
+
+    .title-link {
+        right: -100px;
+        font-size: 0.8em;
+        padding: 6px 12px;
     }
 }
 
